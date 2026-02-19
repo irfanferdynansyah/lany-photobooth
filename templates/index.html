@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LANY XXL Photobooth</title>
+    <style>
+        body { background: #06081a; color: #5080cc; font-family: 'Arial', sans-serif; text-align: center; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: #0a0d25; padding: 40px; border-radius: 20px; border: 1px solid #1a2555; }
+        h1 { font-size: 72px; margin: 0; font-weight: 900; letter-spacing: -3px; color: white; text-shadow: 0 0 30px #4080ff, 0 0 60px #2050cc; }
+        .cam-frame { position: relative; display: inline-block; margin-top: 20px; border: 2px solid #4080ff; border-radius: 8px; overflow: hidden; box-shadow: 0 0 20px #2050cc; }
+        video { width: 640px; display: block; transform: scaleX(-1); }
+        button { background: #0a1a55; color: #80b0ff; border: 1px solid #4080ff; padding: 15px 40px; font-size: 18px; font-weight: bold; border-radius: 50px; cursor: pointer; margin: 10px; transition: 0.3s; letter-spacing: 2px; }
+        button:hover { background: #4080ff; color: white; box-shadow: 0 0 20px #4080ff; }
+        button:disabled { background: #111; color: #333; border-color: #333; cursor: not-allowed; box-shadow: none; }
+        #flash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; opacity: 0; pointer-events: none; z-index: 1000; }
+        .active-flash { animation: fl 0.2s ease-out; }
+        @keyframes fl { 0% { opacity: 1; } 100% { opacity: 0; } }
+        .counter { font-size: 20px; font-weight: bold; margin-top: 10px; color: #4080ff; letter-spacing: 3px; }
+    </style>
+</head>
+<body>
+    <div id="flash"></div>
+    <div class="container">
+        <p style="letter-spacing: 5px; font-weight: bold; color: #3060aa;">PHOTOPHORIA PRESENT</p>
+        <h1>LANY – XXL</h1>
+        <p style="color: #3060aa; font-style: italic;">Lyric photostrip</p>
+        <div class="cam-frame">
+            <video id="video" autoplay playsinline></video>
+        </div>
+        <div class="counter" id="counterText">Photos: 0 / 3</div>
+        <br>
+        <button id="snapBtn" onclick="takeSnap()">TAKE PHOTO 📸</button>
+        <button id="processBtn" onclick="sendToPython()" style="display:none; background:#0a3a1a; border-color:#40ff80; color:#80ffaa;">GENERATE STRIP ✨</button>
+        <div id="status" style="margin-top: 20px; font-weight: bold;"></div>
+    </div>
+
+    <canvas id="canvas" style="display:none;" width="640" height="480"></canvas>
+
+    <script>
+        const video = document.getElementById('video');
+        const snapBtn = document.getElementById('snapBtn');
+        const processBtn = document.getElementById('processBtn');
+        const counterText = document.getElementById('counterText');
+        let shots = [];
+
+        navigator.mediaDevices.getUserMedia({ video: true }).then(s => video.srcObject = s);
+
+        function takeSnap() {
+            if (shots.length < 3) {
+                document.getElementById('flash').classList.add('active-flash');
+                setTimeout(() => document.getElementById('flash').classList.remove('active-flash'), 200);
+
+                const c = document.getElementById('canvas');
+                const ctx = c.getContext('2d');
+                ctx.translate(640, 0); ctx.scale(-1, 1);
+                ctx.drawImage(video, 0, 0, 640, 480);
+                shots.push(c.toDataURL('image/jpeg'));
+
+                counterText.innerText = `Photos: ${shots.length} / 3`;
+
+                if (shots.length === 3) {
+                    snapBtn.style.display = 'none';
+                    processBtn.style.display = 'inline-block';
+                }
+            }
+        }
+
+        function sendToPython() {
+            processBtn.disabled = true;
+            document.getElementById('status').innerText = "CRAFTING YOUR XXL STRIP...";
+
+            fetch('/process', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({images: shots})
+            })
+            .then(r => r.json())
+            .then(d => {
+                document.getElementById('status').innerHTML = `<a href="/download/${d.file}"><button>DOWNLOAD PHOTOSTRIP</button></a>`;
+                processBtn.style.display = 'none';
+            });
+        }
+    </script>
+</body>
+</html>
