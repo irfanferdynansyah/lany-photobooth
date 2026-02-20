@@ -7,7 +7,11 @@ app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 @app.route('/')
-def index():
+def landing():
+    return render_template('landing.html')
+
+@app.route('/photobooth')
+def photobooth():
     return render_template('index.html')
 
 def paste_rotated(canvas, img, center_x, center_y, angle, photo_w, photo_h):
@@ -54,4 +58,5 @@ def download(f):
     return send_file(os.path.join(basedir, "strip", f), as_attachment=True)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)

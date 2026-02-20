@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LANY XXL – Lyric Photostrip</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --navy: #0a1a4a;
+    --blue: #1a3a9a;
+    --mid: #3a6adf;
+    --soft: #7aaaf5;
+    --pale: #c5d8ff;
+    --mist: #e8f0ff;
+    --white: #f8f9ff;
+  }
+
+  body {
+    background: var(--white);
+    color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 60px 20px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.25;
+    animation: float 8s ease-in-out infinite;
+  }
+  .blob-1 { width: 500px; height: 500px; background: #7aaaf5; top: -100px; left: -150px; animation-delay: 0s; }
+  .blob-2 { width: 400px; height: 400px; background: #a0c4ff; bottom: -80px; right: -100px; animation-delay: 3s; }
+  .blob-3 { width: 300px; height: 300px; background: #c5d8ff; top: 40%; left: 60%; animation-delay: 5s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+  }
+
+  .hero-label {
+    font-size: 12px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--soft);
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(72px, 12vw, 140px);
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 0.9;
+    position: relative;
+    z-index: 1;
+    letter-spacing: -3px;
+  }
+
+  .hero-title span {
+    display: block;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(32px, 5vw, 56px);
+    color: var(--mid);
+    letter-spacing: 2px;
+    margin-top: 12px;
+  }
+
+  .hero-lyric {
+    font-size: 15px;
+    color: var(--soft);
+    font-style: italic;
+    margin: 32px 0;
+    position: relative;
+    z-index: 1;
+    letter-spacing: 1px;
+  }
+
+  .hero-lyric::before, .hero-lyric::after { content: '—'; margin: 0 10px; opacity: 0.5; }
+
+  .btn-start {
+    display: inline-block;
+    background: var(--navy);
+    color: var(--white);
+    padding: 18px 56px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+    box-shadow: 0 20px 60px rgba(10,26,74,0.2);
+  }
+
+  .btn-start:hover {
+    background: var(--blue);
+    transform: translateY(-3px);
+    box-shadow: 0 30px 80px rgba(26,58,154,0.3);
+  }
+
+  .lyrics-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .lyric-float {
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--pale);
+    white-space: nowrap;
+    animation: drift 20s linear infinite;
+    opacity: 0.6;
+  }
+
+  @keyframes drift {
+    0% { transform: translateX(-100px); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% { transform: translateX(100px); opacity: 0; }
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    z-index: 1;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  .scroll-hint span { font-size: 11px; letter-spacing: 3px; color: var(--soft); text-transform: uppercase; }
+  .scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, var(--soft), transparent); }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  .section {
+    padding: 100px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--soft);
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 700;
+    text-align: center;
+    color: var(--navy);
+    margin-bottom: 64px;
+    line-height: 1.1;
+  }
+
+  .section-title em { font-style: italic; color: var(--mid); }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  @media (max-width: 600px) { .steps { grid-template-columns: 1fr; } }
+
+  .step {
+    text-align: center;
+    padding: 40px 24px;
+    background: var(--white);
+    border: 1px solid var(--mist);
+    border-radius: 24px;
+    box-shadow: 0 4px 40px rgba(122,170,245,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .step:hover { transform: translateY(-6px); box-shadow: 0 16px 60px rgba(122,170,245,0.16); }
+
+  .step-num {
+    width: 56px; height: 56px;
+    background: var(--mist);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--blue);
+  }
+
+  .step h3 { font-size: 16px; font-weight: 500; color: var(--navy); margin-bottom: 10px; }
+  .step p { font-size: 14px; color: var(--soft); line-height: 1.6; }
+
+  .cta-section {
+    background: var(--navy);
+    padding: 100px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: 'XXL';
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-size: 300px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    letter-spacing: -10px;
+  }
+
+  .cta-section .section-label { color: var(--soft); }
+
+  .cta-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 6vw, 64px);
+    color: var(--white);
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+
+  .cta-section h2 em { font-style: italic; color: var(--pale); }
+  .cta-section p { color: var(--soft); font-size: 16px; margin-bottom: 48px; font-style: italic; }
+
+  .btn-white {
+    display: inline-block;
+    background: var(--white);
+    color: var(--navy);
+    padding: 18px 56px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+
+  .btn-white:hover { transform: translateY(-3px); box-shadow: 0 30px 80px rgba(0,0,0,0.4); }
+
+  footer {
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 1px solid var(--mist);
+  }
+
+  footer p { font-size: 13px; color: var(--soft); letter-spacing: 1px; }
+  footer span { font-style: italic; }
+
+  .divider { display: flex; align-items: center; gap: 20px; max-width: 600px; margin: 0 auto 80px; }
+  .divider-line { flex: 1; height: 1px; background: var(--mist); }
+  .divider-icon { color: var(--pale); font-size: 18px; }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="lyrics-bg">
+    <div class="lyric-float" style="top:15%;font-size:18px;left:5%;animation-duration:25s;">"i love you so bad"</div>
+    <div class="lyric-float" style="top:35%;font-size:14px;left:70%;animation-duration:30s;animation-delay:5s;">"backseat secrets"</div>
+    <div class="lyric-float" style="top:60%;font-size:16px;left:20%;animation-duration:22s;animation-delay:8s;">"stay a little longer"</div>
+    <div class="lyric-float" style="top:80%;font-size:13px;left:55%;animation-duration:28s;animation-delay:12s;">"you're all i want"</div>
+    <div class="lyric-float" style="top:50%;font-size:15px;left:10%;animation-duration:35s;animation-delay:3s;">"i miss you, XXL"</div>
+  </div>
+
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <p class="hero-label">Photophoria Present</p>
+  <h1 class="hero-title">
+    LANY – XXL
+    <span>Lyric Photostrip</span>
+  </h1>
+  <p class="hero-lyric">i love you so bad // 2026</p>
+  <a href="/photobooth" class="btn-start">Take Your Photo</a>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<section class="section">
+  <p class="section-label">How it works</p>
+  <h2 class="section-title">Tiga langkah,<br><em>satu kenangan.</em></h2>
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-icon">♡</div>
+    <div class="divider-line"></div>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Siap-siap</h3>
+      <p>Izinkan akses kamera dan pastikan pencahayaan oke. Senyum ya!</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Foto 3x</h3>
+      <p>Ambil 3 foto terbaik kamu. Bisa gaya apapun, be yourself!</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Download</h3>
+      <p>Photostrip LANY XXL kamu siap didownload dan dishare!</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <p class="section-label">Special for you</p>
+  <h2>Abadikan momen<br><em>bersama LANY.</em></h2>
+  <p>"back patio at the Bowery Hotel"</p>
+  <a href="/photobooth" class="btn-white">Start Now — It's Free</a>
+</section>
+
+<footer>
+  <p>photophoria × lany xxl tour &nbsp;·&nbsp; <span>i love you so bad // 2026</span></p>
+</footer>
+
+</body>
+</html>
