@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LANY XXL – Lyric Photostrip</title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B736VK5Y83"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-B736VK5Y83');
+</script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -26,6 +34,17 @@
     overflow-x: hidden;
   }
 
+  /* ── Noise texture overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Hero ── */
   .hero {
     min-height: 100vh;
     display: flex;
@@ -38,6 +57,7 @@
     overflow: hidden;
   }
 
+  /* Blobs */
   .blob {
     position: absolute;
     border-radius: 50%;
@@ -54,6 +74,7 @@
     50% { transform: translateY(-30px) scale(1.05); }
   }
 
+  /* Hero content */
   .hero-label {
     font-size: 12px;
     letter-spacing: 5px;
@@ -95,7 +116,12 @@
     letter-spacing: 1px;
   }
 
-  .hero-lyric::before, .hero-lyric::after { content: '—'; margin: 0 10px; opacity: 0.5; }
+  .hero-lyric::before,
+  .hero-lyric::after {
+    content: '—';
+    margin: 0 10px;
+    opacity: 0.5;
+  }
 
   .btn-start {
     display: inline-block;
@@ -120,6 +146,7 @@
     box-shadow: 0 30px 80px rgba(26,58,154,0.3);
   }
 
+  /* Floating lyrics background */
   .lyrics-bg {
     position: absolute;
     inset: 0;
@@ -145,6 +172,7 @@
     100% { transform: translateX(100px); opacity: 0; }
   }
 
+  /* Scroll indicator */
   .scroll-hint {
     position: absolute;
     bottom: 40px;
@@ -166,6 +194,7 @@
     50% { transform: translateX(-50%) translateY(8px); }
   }
 
+  /* ── Section: How it works ── */
   .section {
     padding: 100px 20px;
     max-width: 900px;
@@ -193,15 +222,21 @@
     line-height: 1.1;
   }
 
-  .section-title em { font-style: italic; color: var(--mid); }
+  .section-title em {
+    font-style: italic;
+    color: var(--mid);
+  }
 
+  /* Steps */
   .steps {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 40px;
   }
 
-  @media (max-width: 600px) { .steps { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) {
+    .steps { grid-template-columns: 1fr; gap: 32px; }
+  }
 
   .step {
     text-align: center;
@@ -213,7 +248,10 @@
     transition: transform 0.3s, box-shadow 0.3s;
   }
 
-  .step:hover { transform: translateY(-6px); box-shadow: 0 16px 60px rgba(122,170,245,0.16); }
+  .step:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 60px rgba(122,170,245,0.16);
+  }
 
   .step-num {
     width: 56px; height: 56px;
@@ -227,15 +265,27 @@
     color: var(--blue);
   }
 
-  .step h3 { font-size: 16px; font-weight: 500; color: var(--navy); margin-bottom: 10px; }
-  .step p { font-size: 14px; color: var(--soft); line-height: 1.6; }
+  .step h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
 
+  .step p {
+    font-size: 14px;
+    color: var(--soft);
+    line-height: 1.6;
+  }
+
+  /* ── CTA section ── */
   .cta-section {
     background: var(--navy);
     padding: 100px 20px;
     text-align: center;
     position: relative;
     overflow: hidden;
+    z-index: 1;
   }
 
   .cta-section::before {
@@ -262,7 +312,13 @@
   }
 
   .cta-section h2 em { font-style: italic; color: var(--pale); }
-  .cta-section p { color: var(--soft); font-size: 16px; margin-bottom: 48px; font-style: italic; }
+
+  .cta-section p {
+    color: var(--soft);
+    font-size: 16px;
+    margin-bottom: 48px;
+    font-style: italic;
+  }
 
   .btn-white {
     display: inline-block;
@@ -279,24 +335,43 @@
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
   }
 
-  .btn-white:hover { transform: translateY(-3px); box-shadow: 0 30px 80px rgba(0,0,0,0.4); }
+  .btn-white:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+  }
 
+  /* ── Footer ── */
   footer {
     padding: 40px 20px;
     text-align: center;
     border-top: 1px solid var(--mist);
+    position: relative;
+    z-index: 1;
   }
 
-  footer p { font-size: 13px; color: var(--soft); letter-spacing: 1px; }
+  footer p {
+    font-size: 13px;
+    color: var(--soft);
+    letter-spacing: 1px;
+  }
+
   footer span { font-style: italic; }
 
-  .divider { display: flex; align-items: center; gap: 20px; max-width: 600px; margin: 0 auto 80px; }
+  /* Divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto 80px;
+  }
   .divider-line { flex: 1; height: 1px; background: var(--mist); }
   .divider-icon { color: var(--pale); font-size: 18px; }
 </style>
 </head>
 <body>
 
+<!-- HERO -->
 <section class="hero">
   <div class="lyrics-bg">
     <div class="lyric-float" style="top:15%;font-size:18px;left:5%;animation-duration:25s;">"i love you so bad"</div>
@@ -311,11 +386,14 @@
   <div class="blob blob-3"></div>
 
   <p class="hero-label">Photophoria Present</p>
+
   <h1 class="hero-title">
     LANY – XXL
     <span>Lyric Photostrip</span>
   </h1>
+
   <p class="hero-lyric">i love you so bad // 2026</p>
+
   <a href="/photobooth" class="btn-start">Take Your Photo</a>
 
   <div class="scroll-hint">
@@ -324,14 +402,17 @@
   </div>
 </section>
 
+<!-- HOW IT WORKS -->
 <section class="section">
   <p class="section-label">How it works</p>
   <h2 class="section-title">Tiga langkah,<br><em>satu kenangan.</em></h2>
+
   <div class="divider">
     <div class="divider-line"></div>
     <div class="divider-icon">♡</div>
     <div class="divider-line"></div>
   </div>
+
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
@@ -351,6 +432,7 @@
   </div>
 </section>
 
+<!-- CTA -->
 <section class="cta-section">
   <p class="section-label">Special for you</p>
   <h2>Abadikan momen<br><em>bersama LANY.</em></h2>
@@ -358,6 +440,7 @@
   <a href="/photobooth" class="btn-white">Start Now — It's Free</a>
 </section>
 
+<!-- FOOTER -->
 <footer>
   <p>photophoria × lany xxl tour &nbsp;·&nbsp; <span>i love you so bad // 2026</span></p>
 </footer>
