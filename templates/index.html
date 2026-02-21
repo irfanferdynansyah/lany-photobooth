@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-B736VK5Y83"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -111,7 +110,6 @@
 <div id="flash"></div>
 <canvas id="canvas" style="display:none;" width="640" height="480"></canvas>
 
-<!-- ── SCREEN 1: PILIH TEMPLATE ── -->
 <div id="screen-template" class="screen active">
     <p class="screen-label">Photophoria Present</p>
     <h1 class="screen-title">LANY – XXL</h1>
@@ -119,11 +117,11 @@
 
     <div class="template-grid">
         <div class="template-card selected" onclick="selectTemplate('soft', this)">
-            <img src="/static/template_soft.png" alt="Soft">
+            <img src="{{ url_for('static', filename='template_soft.png') }}" alt="Soft">
             <div class="template-card-label">✦ Soft</div>
         </div>
         <div class="template-card" onclick="selectTemplate('dark', this)">
-            <img src="/static/template_dark.png" alt="Dark">
+            <img src="{{ url_for('static', filename='template_dark.png') }}" alt="Dark">
             <div class="template-card-label">◈ Dark</div>
         </div>
     </div>
@@ -131,7 +129,6 @@
     <button class="btn-primary" onclick="goToCamera()">Mulai Foto →</button>
 </div>
 
-<!-- ── SCREEN 2: KAMERA ── -->
 <div id="screen-camera" class="screen">
     <p class="screen-label">Photophoria Present</p>
     <h1 class="screen-title" style="font-size:clamp(32px,6vw,60px);">LANY – XXL</h1>
@@ -158,7 +155,6 @@
     <div class="spinner" id="spinner"></div>
 </div>
 
-<!-- ── SCREEN 3: RESULT ── -->
 <div id="screen-result" class="screen">
     <p class="screen-label">Your photostrip is ready!</p>
     <h1 class="screen-title" style="font-size:clamp(32px,6vw,60px);">LANY – XXL</h1>
