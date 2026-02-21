@@ -21,22 +21,41 @@ def paste_rotated(canvas, img, center_x, center_y, angle, photo_w, photo_h):
     paste_y = center_y - rotated.height // 2
     canvas.paste(rotated, (paste_x, paste_y), rotated)
 
+TEMPLATES = {
+    "soft": {
+        "file": "template_soft.png",
+        "photo_w": 330, "photo_h": 250,
+        "frames": [
+            (464, 345, 0),
+            (464, 615, 0),
+            (464, 885, 0),
+        ]
+    },
+    "dark": {
+        "file": "template_dark.png",
+        "photo_w": 330, "photo_h": 250,
+        "frames": [
+            (464, 345, 0),
+            (464, 615, 0),
+            (464, 885, 0),
+        ]
+    },
+}
+
 @app.route('/process', methods=['POST'])
 def process():
     data = request.json
     images_data = data.get('images', [])
+    template_key = data.get('template', 'soft')
 
-    template_path = os.path.join(basedir, "static", "template_lany.png")
+    config = TEMPLATES.get(template_key, TEMPLATES['soft'])
+    template_path = os.path.join(basedir, "static", config['file'])
     bg = Image.open(template_path).convert("RGBA")
     canvas = bg.copy()
 
-    photo_w, photo_h = 330, 250
-
-    frame_data = [
-        (464, 350, 0),
-        (464, 630, 0),
-        (464, 910, 0),
-    ]
+    photo_w = config['photo_w']
+    photo_h = config['photo_h']
+    frame_data = config['frames']
 
     for i, img_b64 in enumerate(images_data[:3]):
         try:
@@ -48,7 +67,7 @@ def process():
             print(f"Gagal proses foto {i+1}: {e}")
 
     os.makedirs(os.path.join(basedir, "strip"), exist_ok=True)
-    strip_name = f"LANY_FIX_{int(time.time())}.jpg"
+    strip_name = f"LANY_{template_key.upper()}_{int(time.time())}.jpg"
     final_path = os.path.join(basedir, "strip", strip_name)
     canvas.convert("RGB").save(final_path, quality=95)
     return jsonify({"file": strip_name})
