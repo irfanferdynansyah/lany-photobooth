@@ -13,62 +13,34 @@
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body { background: #06081a; color: #5080cc; font-family: 'DM Sans', sans-serif; text-align: center; min-height: 100vh; }
 
-        /* ── SCREEN SYSTEM ── */
         .screen { display: none; min-height: 100vh; padding: 40px 20px; flex-direction: column; align-items: center; justify-content: center; }
         .screen.active { display: flex; }
-
-        /* ── SCREEN 1: PILIH TEMPLATE ── */
-        #screen-template { background: #06081a; }
+        #screen-template, #screen-camera, #screen-result { background: #06081a; }
 
         .screen-label { font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: #3060aa; margin-bottom: 16px; }
         .screen-title { font-family: 'Playfair Display', serif; font-size: clamp(40px, 8vw, 80px); font-weight: 700; color: white; text-shadow: 0 0 40px #4080ff88; margin-bottom: 8px; letter-spacing: -2px; }
         .screen-sub { font-style: italic; color: #5080cc; margin-bottom: 48px; font-size: 16px; }
 
         .template-grid { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
-
-        .template-card {
-            width: 200px; cursor: pointer;
-            border: 2px solid #1a2555; border-radius: 16px; overflow: hidden;
-            transition: all 0.3s; background: #0a0d25;
-        }
+        .template-card { width: 200px; cursor: pointer; border: 2px solid #1a2555; border-radius: 16px; overflow: hidden; transition: all 0.3s; background: #0a0d25; }
         .template-card:hover { transform: translateY(-6px); border-color: #4080ff; box-shadow: 0 20px 50px #4080ff33; }
         .template-card.selected { border-color: #4080ff; box-shadow: 0 0 0 3px #4080ff44; }
-
         .template-card img { width: 100%; height: 260px; object-fit: cover; object-position: top; display: block; }
         .template-card-label { padding: 12px; font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: #7aaaf5; }
         .template-card.selected .template-card-label { color: white; }
 
-        .btn-primary {
-            background: #4080ff; color: white; border: none;
-            padding: 16px 50px; font-size: 14px; font-weight: 500;
-            border-radius: 100px; cursor: pointer; letter-spacing: 3px;
-            text-transform: uppercase; transition: all 0.3s;
-            box-shadow: 0 10px 40px #4080ff44;
-        }
+        .btn-primary { background: #4080ff; color: white; border: none; padding: 16px 50px; font-size: 14px; font-weight: 500; border-radius: 100px; cursor: pointer; letter-spacing: 3px; text-transform: uppercase; transition: all 0.3s; box-shadow: 0 10px 40px #4080ff44; }
         .btn-primary:hover { background: #2060dd; transform: translateY(-2px); box-shadow: 0 16px 50px #4080ff66; }
-
-        /* ── SCREEN 2: KAMERA ── */
-        #screen-camera { background: #06081a; }
 
         .cam-wrap { position: relative; display: inline-block; border-radius: 12px; overflow: hidden; border: 2px solid #1a2555; box-shadow: 0 0 40px #4080ff22; margin: 20px 0; }
         video { width: min(640px, 90vw); display: block; transform: scaleX(-1); }
 
-        /* Countdown overlay */
-        #countdown-overlay {
-            position: absolute; inset: 0;
-            background: rgba(0,0,0,0.6);
-            display: none; align-items: center; justify-content: center;
-            font-family: 'Playfair Display', serif;
-            font-size: 120px; font-weight: 700;
-            color: white; text-shadow: 0 0 40px #4080ff;
-        }
+        #countdown-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 120px; font-weight: 700; color: white; text-shadow: 0 0 40px #4080ff; }
 
         .counter { font-size: 18px; font-weight: 500; margin: 8px 0; color: #4080ff; letter-spacing: 3px; }
 
-        /* Foto thumbnail row */
         .thumbs { display: flex; gap: 10px; justify-content: center; margin: 12px 0; flex-wrap: wrap; }
         .thumb { width: 80px; height: 60px; border-radius: 8px; object-fit: cover; border: 2px solid #1a2555; cursor: pointer; transition: 0.2s; }
         .thumb:hover { border-color: #ff4040; transform: scale(1.05); }
@@ -81,27 +53,17 @@
         .btn-generate:hover { background: #40ff80; color: #000; }
         .btn-generate:disabled { background: #111; color: #333; border-color: #333; cursor: not-allowed; }
 
-        .btn-retake { background: transparent; border: 1px solid #ff4040; color: #ff8080; padding: 10px 28px; font-size: 13px; border-radius: 50px; cursor: pointer; margin: 4px; transition: 0.3s; letter-spacing: 1px; }
-        .btn-retake:hover { background: #ff404022; }
-
-        /* ── SCREEN 3: RESULT ── */
-        #screen-result { background: #06081a; }
-
         .result-img { width: min(400px, 85vw); border-radius: 12px; box-shadow: 0 20px 60px #4080ff44; margin: 24px 0; }
         .btn-download { background: #4080ff; color: white; border: none; padding: 16px 50px; font-size: 14px; font-weight: 500; border-radius: 100px; cursor: pointer; letter-spacing: 3px; text-transform: uppercase; transition: all 0.3s; box-shadow: 0 10px 40px #4080ff44; text-decoration: none; display: inline-block; margin: 8px; }
         .btn-download:hover { background: #2060dd; transform: translateY(-2px); }
         .btn-again { background: transparent; border: 1px solid #4080ff; color: #4080ff; padding: 14px 40px; font-size: 14px; border-radius: 100px; cursor: pointer; letter-spacing: 3px; text-transform: uppercase; transition: all 0.3s; margin: 8px; }
         .btn-again:hover { background: #4080ff22; }
 
-        /* Flash */
         #flash { position: fixed; inset: 0; background: white; opacity: 0; pointer-events: none; z-index: 999; }
         .active-flash { animation: fl 0.25s ease-out; }
         @keyframes fl { 0% { opacity: 1; } 100% { opacity: 0; } }
 
-        /* Status */
         #status { margin-top: 16px; font-weight: bold; font-size: 15px; color: #7aaaf5; }
-
-        /* Loading spinner */
         .spinner { width: 40px; height: 40px; border: 3px solid #1a2555; border-top-color: #4080ff; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 16px auto; display: none; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
@@ -110,6 +72,7 @@
 <div id="flash"></div>
 <canvas id="canvas" style="display:none;" width="640" height="480"></canvas>
 
+<!-- SCREEN 1: PILIH TEMPLATE -->
 <div id="screen-template" class="screen active">
     <p class="screen-label">Photophoria Present</p>
     <h1 class="screen-title">LANY – XXL</h1>
@@ -120,6 +83,10 @@
             <img src="{{ url_for('static', filename='template_soft.png') }}" alt="Soft">
             <div class="template-card-label">✦ Soft</div>
         </div>
+        <div class="template-card" onclick="selectTemplate('blue', this)">
+            <img src="{{ url_for('static', filename='template_blue.png') }}" alt="Blue">
+            <div class="template-card-label">◇ Blue</div>
+        </div>
         <div class="template-card" onclick="selectTemplate('dark', this)">
             <img src="{{ url_for('static', filename='template_dark.png') }}" alt="Dark">
             <div class="template-card-label">◈ Dark</div>
@@ -129,6 +96,7 @@
     <button class="btn-primary" onclick="goToCamera()">Mulai Foto →</button>
 </div>
 
+<!-- SCREEN 2: KAMERA -->
 <div id="screen-camera" class="screen">
     <p class="screen-label">Photophoria Present</p>
     <h1 class="screen-title" style="font-size:clamp(32px,6vw,60px);">LANY – XXL</h1>
@@ -150,11 +118,11 @@
         <button class="btn-snap" id="snapBtn" onclick="startCountdown()">TAKE PHOTO 📸</button>
         <button class="btn-generate" id="processBtn" onclick="sendToPython()">GENERATE STRIP ✨</button>
     </div>
-    <div id="retakeRow"></div>
     <div id="status"></div>
     <div class="spinner" id="spinner"></div>
 </div>
 
+<!-- SCREEN 3: RESULT -->
 <div id="screen-result" class="screen">
     <p class="screen-label">Your photostrip is ready!</p>
     <h1 class="screen-title" style="font-size:clamp(32px,6vw,60px);">LANY – XXL</h1>
@@ -171,14 +139,12 @@
     let shots = [];
     let countdownTimer = null;
 
-    // ── Template select ──
     function selectTemplate(name, el) {
         selectedTemplate = name;
         document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
         el.classList.add('selected');
     }
 
-    // ── Go to camera ──
     function goToCamera() {
         showScreen('screen-camera');
         navigator.mediaDevices.getUserMedia({ video: true })
@@ -186,13 +152,11 @@
             .catch(() => alert('Izinkan akses kamera ya!'));
     }
 
-    // ── Show screen ──
     function showScreen(id) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
     }
 
-    // ── Countdown ──
     function startCountdown() {
         if (shots.length >= 3) return;
         document.getElementById('snapBtn').disabled = true;
@@ -217,7 +181,6 @@
         }, 800);
     }
 
-    // ── Take snap ──
     function takeSnap() {
         document.getElementById('flash').classList.add('active-flash');
         setTimeout(() => document.getElementById('flash').classList.remove('active-flash'), 250);
@@ -240,7 +203,6 @@
         }
     }
 
-    // ── Update thumbnails ──
     function updateThumbs() {
         const row = document.getElementById('thumbRow');
         row.innerHTML = '';
@@ -260,7 +222,6 @@
         }
     }
 
-    // ── Retake ──
     function retakePhoto(index) {
         shots.splice(index, 1);
         updateThumbs();
@@ -270,7 +231,6 @@
         document.getElementById('processBtn').style.display = 'none';
     }
 
-    // ── Send to Python ──
     function sendToPython() {
         document.getElementById('processBtn').disabled = true;
         document.getElementById('status').innerText = "Crafting your strip...";
@@ -296,7 +256,6 @@
         });
     }
 
-    // ── Reset ──
     function resetAll() {
         shots = [];
         updateThumbs();

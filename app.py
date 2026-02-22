@@ -25,20 +25,17 @@ TEMPLATES = {
     "soft": {
         "file": "template_soft.png",
         "photo_w": 330, "photo_h": 250,
-        "frames": [
-            (464, 345, 0),
-            (464, 615, 0),
-            (464, 885, 0),
-        ]
+        "frames": [(464,345,0),(464,615,0),(464,885,0)]
+    },
+    "blue": {
+        "file": "template_blue.png",
+        "photo_w": 330, "photo_h": 250,
+        "frames": [(464,345,0),(464,615,0),(464,885,0)]
     },
     "dark": {
         "file": "template_dark.png",
         "photo_w": 330, "photo_h": 250,
-        "frames": [
-            (464, 345, 0),
-            (464, 615, 0),
-            (464, 885, 0),
-        ]
+        "frames": [(464,345,0),(464,615,0),(464,885,0)]
     },
 }
 
