@@ -38,10 +38,10 @@ TEMPLATES = {
         "frames": [(464,345,0),(464,615,0),(464,885,0)]
     },
     "new": {
-        "file": "template_new.jpeg",
-        "photo_w": 440, "photo_h": 495,
-        "frames": [(268,358,0),(268,770,0),(268,1189,0)]
-    },
+    "file": "template_new.jpeg",
+    "photo_w": 440, "photo_h": 274,
+    "frames": [(268,340,0),(268,752,0),(268,1165,0)]
+},
 }
 
 @app.route('/process', methods=['POST'])
