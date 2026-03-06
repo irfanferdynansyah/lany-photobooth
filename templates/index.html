@@ -91,6 +91,10 @@
             <img src="{{ url_for('static', filename='template_dark.png') }}" alt="Dark">
             <div class="template-card-label">◈ Dark</div>
         </div>
+        <div class="template-card" onclick="selectTemplate('new', this)">
+            <img src="{{ url_for('static', filename='template_new.jpeg') }}" alt="New">
+            <div class="template-card-label">★ New</div>
+        </div>
     </div>
 
     <button class="btn-primary" onclick="goToCamera()">Mulai Foto →</button>
