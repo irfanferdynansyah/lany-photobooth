@@ -39,8 +39,8 @@ TEMPLATES = {
     },
     "new": {
     "file": "template_new.jpeg",
-    "photo_w": 440, "photo_h": 274,
-    "frames": [(268,340,0),(268,752,0),(268,1165,0)]
+    "photo_w": 440, "photo_h": 495,
+    "frames": [(268,358,0),(268,770,0),(268,1189,0)]
 },
 }
 
